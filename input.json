@@ -1,0 +1,22 @@
+{
+    "container_type":"FR20",
+    "items":[
+      {
+        "packing_style":"PACKING_STYLE_SKID",
+        "length":"123",
+        "width":"123",
+        "height":"123",
+        "weight":"123",
+        "cog_height":"123",
+        "cog_height_type":"manual"
+      },
+      {
+        "packing_style":"PACKING_STYLE_CRATE",
+        "length":"1234",
+        "width":"23",
+        "height":"213",
+        "weight":"12",
+        "cog_height_type":"tba"
+      }
+    ]
+  }
