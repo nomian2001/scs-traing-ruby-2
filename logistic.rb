@@ -75,6 +75,7 @@ class Logistic
         else
             check_weight_distribution_FR40(item,container_type)
         end
+        check_height(item)
     end
 
     def check_weight_distribution_FR20(item,container_type)
@@ -105,7 +106,13 @@ class Logistic
         end
     end    
 
-
+    def check_height(item)
+        height_item = item.get_height()
+        if(height_item > Item::MAX_HEIGHT || height_item < Item::MIN_HEIGHT)
+            puts Message::MESSAGE5
+        end
+        
+    end
 
     def range_length(number,container_type)
         length = number.to_s.length
