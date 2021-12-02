@@ -18,6 +18,42 @@ class Item
     LENGTH_20FR_MAX = 529
     LENGTH_40FR_MAX = 1150
 
+    MAX_HEIGHT = 518
+    MIN_HEIGHT = 0
+
+    WEIGHT_20FR_MAX = {
+        0 => 15350,
+        50  => 16017,
+        100 => 16745,
+        150 => 17543,
+        200 => 18420,
+        250 => 19389,
+        300 => 20467,
+        350 => 21671,
+        400 => 23025,
+        450 => 24560,
+        500 => 26314,
+        550 => 28338,
+        600 => 30700
+    }
+
+    WEIGHT_40FR_MAX = {
+        0 => 19350,
+        100 => 20191,
+        200 => 21109,
+        300 => 22114,
+        400 => 23220,
+        500 => 24442,
+        600 => 25800,
+        700 => 27318,
+        800 => 29025,
+        900 => 30960,
+        1000 => 33171,
+        1100 => 35723,
+        1200 => 38700
+    }
+
+
     def initialize(item)
         @packing_style = item['packing_style']
         @length = item['length'].to_i
@@ -56,6 +92,14 @@ class Item
         @cog_height
     end
 
+    def get_max_weight_20FR(length)
+        WEIGHT_20FR_MAX[:"#{length}"]
+    end
+
+    def get_max_weight_40FR(length)
+        WEIGHT_40FR_MAX[:"#{length}"]
+    end
+
     def set_packing_style(packing_style)
         @packing_style = packing_style
     end
@@ -76,7 +120,7 @@ class Item
         @cog_height_type = cog_height_type
     end
 
-    def get_cog_height(cog_height)
+    def set_cog_height(cog_height)
         @cog_height = cog_height
     end
 end
