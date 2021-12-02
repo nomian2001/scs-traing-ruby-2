@@ -12,8 +12,15 @@ class Item
     PACKING_STYLE_SKID = 'SKID'
     PACKING_STYLE_BARE = 'BARE'
 
+    COG_HEIGHT_TYPE_MANUAL = 'manual'
+    COG_HEIGHT_TYPE_TBA = 'tba'
+    COG_HEIGHT_TYPE_HALF_OF_CARGO_HEIGHT_OR_LESS = 'half_of_cargo_height_or_less'
+
     WIDTH_20FR_MAX = 380
     WIDTH_40FR_MAX = 470
+
+    WIDTH_20FR = 243
+    WIDTH_40FR = 243
 
     LENGTH_20FR_MAX = 529
     LENGTH_40FR_MAX = 1150
@@ -21,6 +28,8 @@ class Item
     MAX_HEIGHT = 518
     MIN_HEIGHT = 0
 
+    COG_HEIGHT_FLAT_TRACK = 190
+    COG_HEIGHT_OPEN_TOP = 211
     WEIGHT_20FR_MAX = {
         0 => 15350,
         50  => 16017,
@@ -61,7 +70,7 @@ class Item
         @height = item['height'].to_i
         @weight = item['weight'].to_f
         @cog_height_type = item['cog_height_type']
-        @cog_height = item['cog_height']
+        @cog_height = item['cog_height'].to_i
     end
 
     def get_packing_style
