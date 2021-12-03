@@ -40,6 +40,15 @@ class Item
     TOTAL_LENGTH_20OT = 589
     TOTAL_LENGTH_40OT = 1200
 
+    TOTAL_WEIGHT_20FR = 20
+    TOTAL_WEIGHT_40FR = 38.8
+
+    TOTAL_WEIGHT_20OT = 26.7
+    TOTAL_WEIGHT_40OT = 28.1
+
+    ITEM_RESULT_NG = "ng"
+    ITEM_RESULT_OK = "ok"
+    
     WEIGHT_20FR_MAX = {
         0 => 15350,
         50  => 16017,
