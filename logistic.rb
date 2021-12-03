@@ -365,9 +365,8 @@ class Logistic
     end
 
     def update_total_result_container(result)
-        items = result['items']
-        items.each do |item|
-            if(item['remark'] == Item::ITEM_RESULT_NG)
+        result['items'].each do |item|
+            if(item['result'] == Item::ITEM_RESULT_NG)
                 result['total_result'] = Item::ITEM_RESULT_NG
             else
                 result['total_result'] = Item::ITEM_RESULT_OK 
