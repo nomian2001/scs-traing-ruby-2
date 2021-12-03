@@ -13,10 +13,10 @@ class Logistic
     def main
         container = self.read_input()
         container_type = container.get_container_type()
-        if(check_container_type(container_type))
-            self.handle_flat_track_item(container)
+        if(container_type == Container::FR20 || container_type == Container::FR40)
+            handle_flat_track_item(container)
         else
-            self.handle.open_top_item(container)
+            handle_open_top_item(container)
         end
     end
 
@@ -31,15 +31,6 @@ class Logistic
         end
         return container
     end
-
-    def check_container_type(container_type)
-        if(container_type == Container::FR20 || container_type == Container::FR40)
-            true
-        else
-            false
-        end
-    end
-
 
     def handle_flat_track_item(container)
         container.get_items().each do |item|
@@ -203,24 +194,49 @@ class Logistic
             if(packing_style_item.upcase == Item::PACKING_STYLE_BARE)
                 puts  Message::MESSAGE1
             end
-            open_top_cog_height_calculation(item)
+            open_top_cog_height_calculation(item,container)
         end
     end
 
-    def open_top_cog_height_calculation(item)
+    def open_top_cog_height_calculation(item,container)
         cog_height_type = item.get_cog_height_type()
         case cog_height_type
         when Item::COG_HEIGHT_TYPE_TBA
             puts Message::MESSAGE10
-            open_top_cog_value_check(item)
+            open_top_cog_value_check(item,container)
         when Item::COG_HEIGHT_TYPE_MANUAL
-            open_top_cog_value_check(item)
+            open_top_cog_value_check(item,container)
         when Item::COG_HEIGHT_TYPE_HALF_OF_CARGO_HEIGHT_OR_LESS
-            open_top_cog_value_check(item)
+            open_top_cog_value_check(item,container)
         end
     end
 
-    def open_top_cog_value_check(item)
-        
+    def open_top_cog_value_check(item,container)
+        cog_height_type = item.get_cog_height_type()
+        if( (cog_height_type == Item::COG_HEIGHT_TYPE_HALF_OF_CARGO_HEIGHT_OR_LESS) ||
+            (cog_height_type == Item::COG_HEIGHT_TYPE_TBA)
+        )
+            cog_value = item.get_height()*0.5
+        else
+            cog_value = item.get_height()
+        end
+        if(cog_value > Item::COG_HEIGHT_OPEN_TOP)
+            puts Message::MESSAGE6
+        end
+        open_top_weight_distribution_check(item,container)
     end
+
+    def open_top_weight_distribution_check(item,container)
+        weight_item = item.get_weight()
+        length_item = item.get_length()
+        max_weight_distribution = (weight_item / length_item).to_f
+        container_type = container.get_container_type()
+        if((container_type == Container::OT20 && max_weight_distribution > Item::OT_WEIGHTDIST_20OT_MAX) || 
+            (container_type == Container::OT40 && max_weight_distribution > Item::OT_WEIGHTDIST_40OT_MAX)
+        )
+            puts Message::MESSAGE7
+        end
+        total_length_check(item,container)
+    end
+
 end

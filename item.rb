@@ -30,6 +30,16 @@ class Item
 
     COG_HEIGHT_FLAT_TRACK = 190
     COG_HEIGHT_OPEN_TOP = 211
+
+    OT_WEIGHTDIST_20OT_MAX = 3.0
+    OT_WEIGHTDIST_40OT_MAX = 4.5
+
+    TOTAL_LENGTH_20FR = 597
+    TOTAL_LENGTH_40FR = 1217.8
+
+    TOTAL_LENGTH_20OT = 589
+    TOTAL_LENGTH_40OT = 1200
+
     WEIGHT_20FR_MAX = {
         0 => 15350,
         50  => 16017,
@@ -99,14 +109,6 @@ class Item
 
     def get_cog_height
         @cog_height
-    end
-
-    def get_max_weight_20FR(length)
-        WEIGHT_20FR_MAX[:"#{length}"]
-    end
-
-    def get_max_weight_40FR(length)
-        WEIGHT_40FR_MAX[:"#{length}"]
     end
 
     def set_packing_style(packing_style)
