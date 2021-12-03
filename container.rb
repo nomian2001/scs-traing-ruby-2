@@ -6,6 +6,9 @@ class Container
     OT20 = "OT20"
     OT40 = "OT40"
 
+    CONTAINER_RESULT_NG = "ng"
+    CONTAINER_RESULT_OK = "ok"
+    CONTAINER_RESULT_TBA = "tba"
 
     def initialize(container_type)
         @container_type = container_type

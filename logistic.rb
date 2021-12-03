@@ -129,8 +129,7 @@ class Logistic
         when Item::COG_HEIGHT_TYPE_MANUAL
             over_width_check(item,container,result,index_of_item)
         when Item::COG_HEIGHT_TYPE_TBA
-            update_total_size_container(result,container)
-            update_message_container(result,Message::MESSAGE10)
+            update_message_container(result,container,Message::MESSAGE10)
             over_width_check(item,container,result,index_of_item)
         end
     end    
@@ -226,8 +225,7 @@ class Logistic
         cog_height_type = item.get_cog_height_type()
         case cog_height_type
         when Item::COG_HEIGHT_TYPE_TBA
-            update_total_size_container(result,container)
-            update_message_container(result,Message::MESSAGE10)
+            update_message_container(result,container,Message::MESSAGE10)
             open_top_cog_value_check(item,container,result,index_of_item)
         when Item::COG_HEIGHT_TYPE_MANUAL
             open_top_cog_value_check(item,container,result,index_of_item)
@@ -273,19 +271,19 @@ class Logistic
         case container_type
         when Container::FR20
             if(total_length > Item::TOTAL_LENGTH_20FR)
-                update_message_container(result,Message::MESSAGE8)
+                update_message_container(result,container,Message::MESSAGE8)
             end
         when Container::FR40
             if(total_length > Item::TOTAL_LENGTH_40FR)
-                update_message_container(result,Message::MESSAGE8)
+                update_message_container(result,container,Message::MESSAGE8)
             end
         when Container::OT20
             if(total_length > Item::TOTAL_LENGTH_20OT)
-                update_message_container(result,Message::MESSAGE8)
+                update_message_container(result,container,Message::MESSAGE8)
             end
         when Container::OT40
             if(total_length > Item::TOTAL_LENGTH_40OT)
-                update_message_container(result,Message::MESSAGE8)
+                update_message_container(result,container,Message::MESSAGE8)
             end
         end
         total_weight_check(item,container,result)
@@ -297,19 +295,19 @@ class Logistic
         case container_type
         when Container::FR20
             if(total_weight > Item::TOTAL_WEIGHT_20FR)
-                update_message_container(result,Message::MESSAGE9)
+                update_message_container(result,container,Message::MESSAGE9)
             end
         when Container::FR40
             if(total_weight > Item::TOTAL_WEIGHT_40FR)
-                update_message_container(result,Message::MESSAGE9)
+                update_message_container(result,container,Message::MESSAGE9)
             end
         when Container::OT20
             if(total_weight > Item::TOTAL_WEIGHT_20OT)
-                update_message_container(result,Message::MESSAGE9)
+                update_message_container(result,container,Message::MESSAGE9)
             end
         when Container::OT40
             if(total_weight > Item::TOTAL_WEIGHT_40OT)
-                update_message_container(result,Message::MESSAGE9)
+                update_message_container(result,container,Message::MESSAGE9)
             end
         end
     end
@@ -345,7 +343,39 @@ class Logistic
         end
     end
 
-    def update_message_container(result,message)
+    def update_result_item_ng(result,index_of_item)
+        result['items'][index_of_item]['result'] = Item::ITEM_RESULT_NG 
+    end
+
+    def update_result_item_ok(result,index_of_item)
+        result['items'][index_of_item]['result'] = Item::ITEM_RESULT_OK
+    end
+
+
+    def update_message_container(result,container,message)
+        update_total_size_container(result,container)
+        update_total_result_container(result)
+        update_total_remark_container(result,message)
+        update_final_conclusion(result)
+    end
+
+    def update_total_size_container(result,container)
+        result['total_length'] = total_length_in_container(container)
+        result['total_weight'] = total_weight_in_container(container)
+    end
+
+    def update_total_result_container(result)
+        items = result['items']
+        items.each do |item|
+            if(item['remark'] == Item::ITEM_RESULT_NG)
+                result['total_result'] = Item::ITEM_RESULT_NG
+            else
+                result['total_result'] = Item::ITEM_RESULT_OK 
+            end
+        end
+    end
+
+    def update_total_remark_container(result,message)
         if(result.has_key?('total_remark'))                     #check if inside of container has key "total_remark" or not
             if(!result['total_remark'].include?(message))         #check if message is existed in key "total_remark"
                 tmp_message = result['total_remark']
@@ -356,17 +386,12 @@ class Logistic
         end
     end
 
-    def update_result_item_ng(result,index_of_item)
-            result['items'][index_of_item]['result'] = Item::ITEM_RESULT_NG 
-    end
-
-    def update_result_item_ok(result,index_of_item)
-        result['items'][index_of_item]['result'] = Item::ITEM_RESULT_OK
-    end
-
-    def update_total_size_container(result,container)
-        result['total_length'] = total_length_in_container(container)
-        result['total_weight'] = total_weight_in_container(container)
+    def update_final_conclusion(result)
+        if(result['total_result'] == Container::CONTAINER_RESULT_NG)
+            result['final_conclusion'] = Container::CONTAINER_RESULT_NG
+        else
+            result['final_conclusion'] = Container::CONTAINER_RESULT_OK
+        end 
     end
 
 end

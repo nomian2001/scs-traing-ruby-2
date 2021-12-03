@@ -23,7 +23,9 @@
       "remark": "Length exceeds criteria. Further evaluation by SCM is required \nWeight Distribution exceeds criteria. Further evaluation by SCM is required."
     }
   ],
-  "total_remark": "Length may exceeds container dimension \nWeight may exceeds max payload \nThis acceptance check has to be done again after COG height is determined. This result assuming that the COG is half height of the cargo as you inputted 'TBA' for COG.",
   "total_length": 1357,
-  "total_weight": 135.0
+  "total_weight": 135.0,
+  "total_result": "ok",
+  "total_remark": "Length may exceeds container dimension \nWeight may exceeds max payload \nThis acceptance check has to be done again after COG height is determined. This result assuming that the COG is half height of the cargo as you inputted 'TBA' for COG.",
+  "final_conclusion": "ok"
 }
