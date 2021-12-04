@@ -1,8 +1,8 @@
 {
-  "container_type": "OT20",
+  "container_type": "FR20",
   "items": [
     {
-      "packing_style": "bare",
+      "packing_style": "case",
       "length": "123",
       "width": "123",
       "height": "123",
@@ -10,21 +10,22 @@
       "cog_height": "123",
       "cog_height_type": "manual",
       "result": "ng",
-      "remark": "Further evaluation is required. Reason : Packing style"
+      "remark": "Weight Distribution exceeds criteria. Further evaluation by SCM is required."
     },
     {
-      "packing_style": "case",
-      "length": "40",
+      "packing_style": "crate",
+      "length": "1234",
       "width": "23",
       "height": "213",
-      "weight": "100",
-      "cog_height_type": "half_of_cargo_height_or_less",
-      "result": "ok"
+      "weight": "12",
+      "cog_height_type": "tba",
+      "result": "ng",
+      "remark": "Length exceeds criteria. Further evaluation by SCM is required \nWeight Distribution exceeds criteria. Further evaluation by SCM is required."
     }
   ],
-  "total_length": 163,
-  "total_weight": 223.0,
+  "total_length": 1357,
+  "total_weight": 135.0,
   "total_result": "ng",
-  "total_remark": "Weight may exceeds max payload",
+  "total_remark": "Length may exceeds container dimension \nWeight may exceeds max payload \nThis acceptance check has to be done again after COG height is determined. This result assuming that the COG is half height of the cargo as you inputted 'TBA' for COG.",
   "final_conclusion": "ng"
 }
