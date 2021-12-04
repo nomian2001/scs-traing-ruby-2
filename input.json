@@ -1,8 +1,8 @@
 {
-    "container_type":"FR20",
+    "container_type":"OT20",
     "items":[
       {
-        "packing_style":"case",
+        "packing_style":"bare",
         "length":"123",
         "width":"123",
         "height":"123",
@@ -11,12 +11,12 @@
         "cog_height_type":"manual"
       },
       {
-        "packing_style":"crate",
-        "length":"1234",
+        "packing_style":"case",
+        "length":"40",
         "width":"23",
         "height":"213",
-        "weight":"12",
-        "cog_height_type":"tba"
+        "weight":"100",
+        "cog_height_type":"half_of_cargo_height_or_less"
       }
     ]
 }

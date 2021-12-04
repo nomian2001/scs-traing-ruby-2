@@ -170,7 +170,7 @@ class Logistic
             update_result_item_ng(result,index_of_item)
             update_message_item(result,Message::MESSAGE6,index_of_item)
         end
-
+        update_result_item_ok(result,index_of_item)
         total_length_check(item,container,result)
     end
     
@@ -182,6 +182,7 @@ class Logistic
             update_result_item_ng(result,index_of_item)
             update_message_item(result,Message::MESSAGE6,index_of_item)
         end
+        update_result_item_ok(result,index_of_item)
         total_length_check(item,container,result)
     end
 
@@ -210,8 +211,8 @@ class Logistic
         return [start_range,end_range]
     end
 
-    def handle_open_top_item(container,result,index_of_item)
-        container.get_items().each do |item|
+    def handle_open_top_item(container,result)
+        container.get_items().each_with_index do |item,index_of_item|
             packing_style_item = item.get_packing_style()
             if(packing_style_item.upcase == Item::PACKING_STYLE_BARE)
                 update_result_item_ng(result,index_of_item)
@@ -261,7 +262,7 @@ class Logistic
             update_result_item_ng(result,index_of_item)
             update_message_item(result,Message::MESSAGE7,index_of_item)
         end
-        
+        update_result_item_ok(result,index_of_item)
         total_length_check(item,container,result)
     end
 
@@ -336,7 +337,7 @@ class Logistic
         if(result['items'][index_of_item].has_key?('remark'))                   #check if inside of item has key "remark" or not
             if(!result['items'][index_of_item]['remark'].include?(message))             #check if message is existed in remark
                 tmp_message = result['items'][index_of_item]['remark']
-                result['items'][index_of_item]['remark'] = "#{tmp_message} \n" + "#{message}"
+                result['items'][index_of_item]['remark'] = "#{tmp_message} \n#{message}"
             end
         else
             result['items'][index_of_item]['remark'] = message
@@ -348,7 +349,9 @@ class Logistic
     end
 
     def update_result_item_ok(result,index_of_item)
-        result['items'][index_of_item]['result'] = Item::ITEM_RESULT_OK
+        if(!result['items'][index_of_item].has_key?("result"))                #if there is no ng => item is ok
+            result['items'][index_of_item]['result'] = Item::ITEM_RESULT_OK
+        end
     end
 
 
@@ -368,9 +371,9 @@ class Logistic
         result['items'].each do |item|
             if(item['result'] == Item::ITEM_RESULT_NG)
                 result['total_result'] = Item::ITEM_RESULT_NG
-            else
-                result['total_result'] = Item::ITEM_RESULT_OK 
+                break
             end
+            result['total_result'] = Item::ITEM_RESULT_OK 
         end
     end
 
@@ -378,7 +381,7 @@ class Logistic
         if(result.has_key?('total_remark'))                     #check if inside of container has key "total_remark" or not
             if(!result['total_remark'].include?(message))         #check if message is existed in key "total_remark"
                 tmp_message = result['total_remark']
-                result['total_remark'] = "#{tmp_message} \n" + "#{message}"
+                result['total_remark'] = "#{tmp_message} \n#{message}"
             end
         else
             result['total_remark'] = message
